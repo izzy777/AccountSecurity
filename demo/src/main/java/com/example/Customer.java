@@ -1,4 +1,4 @@
-package com.example.CustomerMicroservices;
+package com.example;
 
 import org.hibernate.annotations.DialectOverride.GeneratedColumn;
 import org.hibernate.id.CompositeNestedGeneratedValueGenerator.GenerationPlan;
@@ -47,7 +47,7 @@ public class Customer {
         return this.name;
     }
 
-    public void setPassword(){
+    public void setPassword(String password){
         this.password = password;
     }
 
@@ -55,7 +55,7 @@ public class Customer {
         return this.password;
     }
 
-    public void setEmail(){
+    public void setEmail(String email){
         this.email = email;
     }
 
