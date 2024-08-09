@@ -1,5 +1,5 @@
 package com.example;
-
+/* 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,21 +8,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringJoiner;
 
+*/
+
+import java.net.URI;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.Customer;
-import com.example.CustomerFactory;
 import com.example.Token;
 import com.example.util.JWTHelper;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/account")
 public class TokenApi {
     
 
@@ -30,23 +35,31 @@ public class TokenApi {
 
     @GetMapping
     public String getAllTokens(){
-        return "jwt-fake-token-asdfasdfasfa".toString();
+        return "stuff";
     }
 
-    @PostMapping
-    public ResponseEntity<?> verifyCustomer(@RequestBody Customer customer){
-        String username = customer.getName();
-        String password = customer.getPassword();
-        Token token;
-        ResponseEntity<?> response;
-        if(username.equals(customer.getName()) && username.equals(customer.getPassword()) && username != null && username.length() > 0 && verifyPassword(username, password)){
-			token = createToken(username);
+    public ResponseEntity<?> response;
+
+    //those character things
+    @PostMapping("/token")
+    public ResponseEntity<?> verifyCustomer(@RequestBody Customer c){
+        String username = c.getName();
+        String password = c.getPassword();
+
+        //stuff inside token
+        //verifies credentials
+        if(username.equals("JohnDoe") && password.equals("password123") && username != null && username.length() > 0 ){//&& verifyPassword(username, password)){
+			//create token based on username
+            //create token for user
+            Token token;
+            token = createToken(username);
+            //the stuff inside token for that user
 			response = ResponseEntity.ok(token);
-			return response;			
+			return response;
 		}
 		return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-
+/* 
     public boolean verifyPassword(String username, String password) {
         try {
             Customer customer = getNameFromCustomerAPI(username);
@@ -80,7 +93,8 @@ public class TokenApi {
 		}
 		return token;
 	}
-	
+	*/
+    //creates token by calling JWTHelper
     private static Token createToken(String username) {
     	String packagePath = "com.example.TokenApi";
     	if( username.equalsIgnoreCase("ApiClientApp")) {
